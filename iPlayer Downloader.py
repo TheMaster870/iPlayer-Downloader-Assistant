@@ -1,13 +1,14 @@
 import os
 
 def PIDDownloader():
+    os.system("cls")
     print("Please enter the list of PIDs, one on each line.")
-    print("Enter 'done' when finished")
+    print("Enter 'd' when finished")
     pids = []
     finished = False
     while finished == False:
         entry = input()
-        if entry == "done":
+        if entry == "d":
             finished = True
         else:
             if entry != "":
@@ -19,6 +20,8 @@ def PIDDownloader():
         pidlist = ""
         for pid in pids:
             pidlist = pidlist + pid + ", "
+
+        pidlist = pidlist[:-2]
         print(pidlist)
         print("")
         print("Is this correct? y or n")
@@ -30,10 +33,11 @@ def PIDDownloader():
             total = len(pids)
             for pid in pids:
                 print("Downloading episode " + str(i) + " of " + str(total) + "...")
-                command = "get_iplayer --overwrite --force --tv-quality=fhd --pid=" + pid
+                command = "get_iplayer --overwrite --force --subtitles --subs-embed --file-prefix=\"<name> - <episode>\" --whitespace --tv-quality=fhd --pid=" + pid
                 os.system(command)
                 print("")
                 i += 1
+            
             
             print("#######################")
             print("Completed")
