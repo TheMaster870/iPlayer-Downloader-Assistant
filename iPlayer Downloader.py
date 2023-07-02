@@ -1,7 +1,8 @@
 import os
+from pathlib import Path
 
 def PIDDownloader():
-    os.system("cls")
+    print("PID Downloader")
     print("Please enter the list of PIDs, one on each line.")
     print("Enter 'd' when finished")
     pids = []
@@ -51,6 +52,7 @@ def PIDDownloader():
     input()
 
 def PIDInfo():
+    print("PID Info")
     print("Please enter the list of PIDs, one on each line.")
     print("Enter 'done' when finished")
     pids = []
@@ -79,16 +81,78 @@ def PIDInfo():
     
     print("ENTER to continue")
     input()
+
+def SearchDownloader():
+    print("Search Downloader")
+    print("Some commands are already preset for easy quick searching:")
+    print("--type=tv,radio --listformat=\"<index>, <name>, <episode>, <channel>, <pid>\" --long")
+    print("You can add your own custom parameters as part of get_iplayer:")
+    print("https://github.com/get-iplayer/get_iplayer/wiki/search")
+    print("")
+    print("Enter the text to search for:")
+    searchText = input()
+
+    if searchText != "":
+        os.system("cls")
+        print("Searching...")
+        command = "get_iplayer --type=tv,radio --listformat=\"<index>, <name>, <episode>, <channel>, <pid>\" --long \"" + searchText + "\""
+        os.system(command)
+        print("")
+
+        chosen = False
+        choice = ""
+        print("Would you like to download the search results? y/n")
+
+        while(chosen == False):
+            choice = input()
+            choice = choice.lower()
+            if choice == "y" or choice == "n":
+                chosen = True
+        
+        if choice == "y":
+            os.system("cls")
+            print("Downloading programes with the following search parameters:")
+            print(searchText)
+            command = "get_iplayer -g --overwrite --force --subtitles --subs-embed --file-prefix=\"<name> - <episode>\" --whitespace --radio-quality=high --tv-quality=fhd --type=tv,radio  --long \"" + searchText + "\""
+            os.system(command)
+
+            print("#######################")
+            print("Completed")
+        else:
+            print("Canceling")
+    else:
+        print("Nothing entered")
+
+    print("ENTER to continue")
+    input()
     
+def OpenRecordingsFolder():
+    print("Opening Recordings folder...")
+    home = str(Path.home())
+    path = home + "/Desktop/iPlayer Recordings/"
+    path = os.path.realpath(path)
+    os.startfile(path)
+    print(path)
 
 while(True):
     os.system("cls")
     print("iPlayer Downloader")
-    print("")
+    print()
     print("1 - PID Downloader")
     print("2 - PID Info")
+    print("3 - Search Downloader")
+    print()
+    print("0 - Open Recordings folder")
     choice = input()
     if choice == "1":
+        os.system("cls")
         PIDDownloader()
     elif choice == "2":
+        os.system("cls")
         PIDInfo()
+    elif choice == "3":
+        os.system("cls")
+        SearchDownloader()
+    elif choice == "0":
+        os.system("cls")
+        OpenRecordingsFolder()
