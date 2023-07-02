@@ -12,7 +12,7 @@ def PIDDownloader():
         if entry == "d":
             finished = True
         else:
-            if entry != "":
+            if entry != "" and not entry.isspace():
                 pids.append(entry)
 
     if len(pids) > 0:
@@ -54,15 +54,16 @@ def PIDDownloader():
 def PIDInfo():
     print("PID Info")
     print("Please enter the list of PIDs, one on each line.")
-    print("Enter 'done' when finished")
+    print("Enter 'd' when finished")
     pids = []
     finished = False
     while finished == False:
         entry = input()
-        if entry == "done":
+        if entry == "d":
             finished = True
         else:
-            pids.append(entry)
+            if entry != "" and not entry.isspace():
+                pids.append(entry)
 
     if len(pids) > 0:
         i = 1
@@ -89,13 +90,16 @@ def SearchDownloader():
     print("You can add your own custom parameters as part of get_iplayer:")
     print("https://github.com/get-iplayer/get_iplayer/wiki/search")
     print("")
-    print("Enter the text to search for:")
+    print("First, Enter the text to search for:")
     searchText = input()
+    print()
+    print("Second, Enter any extra parameters: (leave blank for none)")
+    parameters = input()
 
-    if searchText != "":
+    if searchText != "" and not searchText.isspace():
         os.system("cls")
         print("Searching...")
-        command = "get_iplayer --type=tv,radio --listformat=\"<index>, <name>, <episode>, <channel>, <pid>\" --long \"" + searchText + "\""
+        command = "get_iplayer --type=tv,radio --listformat=\"<index>, <name>, <episode>, <channel>, <pid>\" --long \"" + searchText + "\" " + parameters
         os.system(command)
         print("")
 
@@ -113,7 +117,7 @@ def SearchDownloader():
             os.system("cls")
             print("Downloading programes with the following search parameters:")
             print(searchText)
-            command = "get_iplayer -g --overwrite --force --subtitles --subs-embed --file-prefix=\"<name> - <episode>\" --whitespace --radio-quality=high --tv-quality=fhd --type=tv,radio  --long \"" + searchText + "\""
+            command = "get_iplayer -g --overwrite --force --subtitles --subs-embed --file-prefix=\"<name> - <episode>\" --whitespace --radio-quality=high --tv-quality=fhd --type=tv,radio  --long \"" + searchText + "\" " + parameters
             os.system(command)
 
             print("#######################")
