@@ -34,7 +34,7 @@ def PIDDownloader():
             total = len(pids)
             for pid in pids:
                 print("Downloading episode " + str(i) + " of " + str(total) + "...")
-                command = "get_iplayer --overwrite --force --subtitles --subs-embed --file-prefix=\"<name> - <episode>\" --whitespace --tv-quality=fhd --pid=" + pid
+                command = "get_iplayer --overwrite --force --subtitles --subs-embed --file-prefix=\"<name> - <episode> S<seriesnum>E<episodenum>\" --whitespace --tv-quality=\"fhd,hd,sd\" --pid=" + pid
                 os.system(command)
                 print("")
                 i += 1
@@ -84,8 +84,8 @@ def PIDInfo():
     input()
 
 def ShowDownloader():
-    print("Show Downloader")
-    print("Please enter the list of PIDs for shows, one on each line.")
+    print("Show/Series Downloader")
+    print("Please enter the list of PIDs for shows/series, one on each line.")
     print("Enter 'd' when finished")
     pids = []
     finished = False
@@ -115,8 +115,8 @@ def ShowDownloader():
             i = 1
             total = len(pids)
             for pid in pids:
-                print("Downloading episode " + str(i) + " of " + str(total) + "...")
-                command = "get_iplayer --overwrite --force --subtitles --subs-embed --file-prefix=\"<name> - <episode>\" --pid-recursive --whitespace --tv-quality=\"fhd,hd,sd\" --pid=" + pid
+                print("Downloading show/series " + str(i) + " of " + str(total) + "...")
+                command = "get_iplayer --overwrite --force --subtitles --subs-embed --file-prefix=\"<name> - <episode> S<seriesnum>E<episodenum>\" --pid-recursive --whitespace --tv-quality=\"fhd,hd,sd\" --pid=" + pid
                 os.system(command)
                 print("")
                 i += 1
@@ -167,7 +167,7 @@ def SearchDownloader():
             os.system("cls")
             print("Downloading programs with the following search parameters:")
             print(searchText)
-            command = "get_iplayer -g --overwrite --force --subtitles --subs-embed --file-prefix=\"<name> - <episode>\" --whitespace --radio-quality=high --tv-quality=\"fhd,hd,sd\" --type=tv,radio  --long \"" + searchText + "\" " + parameters
+            command = "get_iplayer -g --overwrite --force --subtitles --subs-embed --file-prefix=\"<name> - <episode> S<seriesnum>E<episodenum>\" --whitespace --radio-quality=high --tv-quality=\"fhd,hd,sd\" --type=tv,radio  --long \"" + searchText + "\" " + parameters
             os.system(command)
 
             print("#######################")
@@ -194,7 +194,7 @@ while(True):
     print()
     print("1 - PID Downloader")
     print("2 - PID Info")
-    print("3 - Show Downloader")
+    print("3 - Show/Series Downloader")
     print("4 - Search Downloader")
     print()
     print("0 - Open Recordings folder")
