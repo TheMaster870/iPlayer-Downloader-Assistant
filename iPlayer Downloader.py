@@ -83,6 +83,56 @@ def PIDInfo():
     print("ENTER to continue")
     input()
 
+def ShowDownloader():
+    print("Show Downloader")
+    print("Please enter the list of PIDs for shows, one on each line.")
+    print("Enter 'd' when finished")
+    pids = []
+    finished = False
+    while finished == False:
+        entry = input()
+        if entry == "d":
+            finished = True
+        else:
+            if entry != "" and not entry.isspace():
+                pids.append(entry)
+
+    if len(pids) > 0:
+        os.system("cls")
+        print("I will download the following PIDs:")
+        pidlist = ""
+        for pid in pids:
+            pidlist = pidlist + pid + ", "
+
+        pidlist = pidlist[:-2]
+        print(pidlist)
+        print("")
+        print("Is this correct? y or n")
+        correct = input()
+        correct = correct.lower()
+        if correct == "y" or correct == "yes":
+            os.system("cls")
+            i = 1
+            total = len(pids)
+            for pid in pids:
+                print("Downloading episode " + str(i) + " of " + str(total) + "...")
+                command = "get_iplayer --overwrite --force --subtitles --subs-embed --file-prefix=\"<name> - <episode>\" --pid-recursive --whitespace --tv-quality=\"fhd,hd,sd\" --pid=" + pid
+                os.system(command)
+                print("")
+                i += 1
+            
+            
+            print("#######################")
+            print("Completed")
+        else:
+            print("Chose no")
+
+    else:
+        print("No PIDs entered")
+
+    print("ENTER to continue")
+    input()
+
 def SearchDownloader():
     print("Search Downloader")
     print("Some commands are already preset for easy quick searching:")
@@ -115,9 +165,9 @@ def SearchDownloader():
         
         if choice == "y":
             os.system("cls")
-            print("Downloading programes with the following search parameters:")
+            print("Downloading programs with the following search parameters:")
             print(searchText)
-            command = "get_iplayer -g --overwrite --force --subtitles --subs-embed --file-prefix=\"<name> - <episode>\" --whitespace --radio-quality=high --tv-quality=fhd --type=tv,radio  --long \"" + searchText + "\" " + parameters
+            command = "get_iplayer -g --overwrite --force --subtitles --subs-embed --file-prefix=\"<name> - <episode>\" --whitespace --radio-quality=high --tv-quality=\"fhd,hd,sd\" --type=tv,radio  --long \"" + searchText + "\" " + parameters
             os.system(command)
 
             print("#######################")
@@ -144,7 +194,8 @@ while(True):
     print()
     print("1 - PID Downloader")
     print("2 - PID Info")
-    print("3 - Search Downloader")
+    print("3 - Show Downloader")
+    print("4 - Search Downloader")
     print()
     print("0 - Open Recordings folder")
     choice = input()
@@ -155,6 +206,9 @@ while(True):
         os.system("cls")
         PIDInfo()
     elif choice == "3":
+        os.system("cls")
+        ShowDownloader()
+    elif choice == "4":
         os.system("cls")
         SearchDownloader()
     elif choice == "0":
